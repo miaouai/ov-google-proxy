@@ -126,17 +126,13 @@ async function handleCopyConfig(request, workerHost) {
       }
       
       function showQRCode() {
-        // 奥维二维码格式 - hn 和 ul 必须是 Base64 编码 (关键!)
-        var workerHost = '${workerHost}';
-        var hnBase64 = btoa(workerHost);  // Base64 编码 Worker 域名
-        var urlTemplate = '/vt?lyrs=m&x={$x}&y={$y}&z={$z}';
-        var ulBase64 = btoa(urlTemplate);  // Base64 编码 URL 模板
+        // ✅ 使用验证成功的 URL 模板格式
+        var workerHost = '${workerHost}'.replace('https://', '').replace('http://', '').split(':')[0];  // 只保留主机名
+        var urlTemplate = '/vt/lyrs=s@699&hl=zh-CN&gl=cn&src=app&x={$x}&y={$y}&z={$z}&s=';
         
-        console.log('=== QRCode Debug ===');
-        console.log('hn (原始):', workerHost);
-        console.log('hn (Base64):', hnBase64, '→ 解码:', atob(hnBase64));
-        console.log('ul (原始):', urlTemplate);
-        console.log('ul (Base64):', ulBase64, '→ 解码:', atob(ulBase64));
+        console.log('=== QRCode Debug v2.0.3 ===');
+        console.log('Worker Host:', workerHost);
+        console.log('URL Template:', urlTemplate);
         
         const qrData = 'ovobj?t=37&id=202&na=6auY5b635Y2r5pif5Zu_&po=0&vr=1&pn=1&mt=1&mf=3&hs=1&he=4&oy=1&df=211,16777215,211,16777215&hn=' + hnBase64 + '&ul=' + ulBase64;
         
