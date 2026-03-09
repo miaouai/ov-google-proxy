@@ -211,7 +211,7 @@ async function handleProxyRequest(request) {
     });
   } catch (error) {
     console.error('[Proxy Error]', error);
-    return new Response(\`Proxy error: \${error.message}\`, { 
+    return new Response(`Proxy error: ${error.message}`, { 
       status: 502,
       headers: { 'Content-Type': 'text/plain' }
     });
