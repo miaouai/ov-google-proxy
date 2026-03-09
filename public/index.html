@@ -3,152 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>奥维地图 Google 源 - v2.0.4</title>
+    <title>奥维地图 Google 源配置 - v2.0.6</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; background: #f6f8fa; }
-        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        h1 { color: #24292e; margin-bottom: 10px; }
-        .version { background: #0366d6; color: white; padding: 5px 12px; border-radius: 4px; font-size: 14px; display: inline-block; margin-bottom: 20px; }
-        .info-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
-        .success-box { background: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; }
-        .config-section { background: #f6f8fa; border: 2px solid #dfe2e5; border-radius: 6px; padding: 25px; margin: 20px 0; }
-        .config-title { font-weight: bold; color: #24292e; margin-bottom: 15px; font-size: 16px; }
-        .config-code { background: white; border: 1px solid #dfe2e5; border-radius: 4px; padding: 20px; font-family: 'Consolas', 'Monaco', monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap; word-break: break-all; overflow-x: auto; }
-        .step { background: #e3f2fd; border-radius: 6px; padding: 20px; margin: 20px 0; }
-        .step h3 { margin-top: 0; color: #0366d6; }
-        .step ol { margin: 10px 0; padding-left: 25px; }
-        .step li { margin: 8px 0; line-height: 1.6; }
-        code { background: #f6f8fa; padding: 2px 8px; border-radius: 3px; font-size: 13px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
-        th, td { border: 1px solid #dfe2e5; padding: 12px; text-align: left; }
-        th { background: #f6f8fa; font-weight: 600; width: 200px; }
-        .tip { background: #f1f8ff; border-left: 4px solid #2196f3; padding: 12px; margin: 15px 0; font-size: 14px; }
-        hr { border: none; border-top: 1px solid #e1e4e8; margin: 40px 0; }
+        * { box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 1000px; margin: 0 auto; padding: 30px 20px; background: #f6f8fa; color: #24292e; line-height: 1.5; }
+        .container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h1 { color: #0366d6; margin-bottom: 10px; font-size: 28px; }
+        .version { background: #2ea44f; color: white; padding: 4px 10px; border-radius: 4px; font-size: 13px; display: inline-block; margin-bottom: 25px; }
+        .info-banner { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .info-banner strong { color: #856404; }
+        .server-info { background: #e3f2fd; border: 1px solid #2196f3; border-radius: 6px; padding: 15px; margin: 20px 0; font-size: 14px; }
+        .server-info code { background: #f1f8ff; padding: 2px 6px; border-radius: 3px; color: #0366d6; }
+        .config-grid { display: grid; gap: 25px; margin: 30px 0; }
+        .config-card { background: #fafbfc; border: 1px solid #dfe2e5; border-radius: 8px; overflow: hidden; }
+        .card-header { background: linear-gradient(135deg, #0366d6, #05a0fb); color: white; padding: 15px 20px; font-weight: 600; font-size: 16px; display: flex; align-items: center; justify-content: space-between; }
+        .card-header .icon { font-size: 20px; }
+        .card-body { padding: 20px; }
+        .config-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; }
+        .config-table th { background: #f6f8fa; padding: 10px 12px; text-align: left; font-weight: 600; width: 120px; border-bottom: 2px solid #dfe2e5; }
+        .config-table td { padding: 10px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .config-table tr:last-child td { border-bottom: none; }
+        .config-code { background: #fff; border: 1px solid #dfe2e5; border-radius: 4px; padding: 12px; font-family: 'Consolas', 'Monaco', monospace; font-size: 13px; white-space: pre-wrap; word-break: break-all; margin: 10px 0; position: relative; }
+        .copy-hint { font-size: 12px; color: #586069; margin-top: 8px; font-style: italic; }
+        .steps { background: #f1f8ff; border-left: 4px solid #2196f3; padding: 20px; border-radius: 6px; margin: 25px 0; }
+        .steps h3 { margin-top: 0; color: #0366d6; }
+        .steps ol { padding-left: 20px; }
+        .steps li { margin: 10px 0; line-height: 1.6; }
+        .tip { background: #f0fff4; border-left: 4px solid #28a745; padding: 12px; margin: 15px 0; font-size: 14px; border-radius: 4px; }
+        hr { border: none; border-top: 1px solid #e1e4e8; margin: 35px 0; }
+        footer { text-align: center; margin-top: 40px; color: #586069; font-size: 13px; }
+        footer a { color: #0366d6; text-decoration: none; }
+        @media (max-width: 768px) {
+            .container { padding: 25px 15px; }
+            .config-table th { width: 100px; font-size: 13px; }
+            .config-table td { font-size: 13px; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🗺️ 奥维地图 Google 源配置</h1>
-        <span class="version">v2.0.4 (2024-03-09)</span>
+        <span class="version">v2.0.6 (2024-03-09)</span>
         
-        <div class="info-box">
-            <strong>✅ 已验证可用</strong><br>
-            当前 Worker 域名：<code id="currentHost">-</code><br>
-            URL 模板格式：<code>/vt/lyrs=s@699&hl=zh-CN&gl=cn&src=app&x={$x}&y={$y}&z={$z}&s=</code>
+        <div class="info-banner">
+            <strong>✅ 已验证可用 | 自动检测域名</strong><br>
+            以下配置已根据您的 Worker 域名自动生成，直接复制即可使用。
         </div>
         
-        <!-- 第一步：复制配置 -->
-        <div class="step">
-            <h3>📋 第一步：复制下方 XML 配置</h3>
-            <p>点击下方配置框中的内容，全选并复制（Ctrl+C）：</p>
-            
-            <div class="config-section">
-                <div class="config-title">XML 配置文件：</div>
-                <div class="config-code" id="xmlConfig">Loading...</div>
+        <div class="server-info">
+            <strong>🌐 当前服务器信息：</strong><br>
+            Worker 域名：<code id="currentDomain">检测中...</code><br>
+            协议：<code>https</code> | 端口：<code>443</code>
+        </div>
+
+        <div class="config-grid">
+            <!-- 卫星图配置 -->
+            <div class="config-card">
+                <div class="card-header">
+                    <span><span class="icon">🛰️</span> Google 卫星图（推荐）</span>
+                    <span style="font-size: 12px; opacity: 0.9;">lyrs=s</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin: 0 0 10px 0; color: #586069; font-size: 14px;">高清卫星影像，适合查看地形、建筑细节</p>
+                    <table class="config-table">
+                        <tr><th>名称</th><td>谷歌卫星</td></tr>
+                        <tr><th>最大缩放</th><td>28</td></tr>
+                        <tr><th>坐标系</th><td>Web Mercator</td></tr>
+                        <tr><th>XML 配置</th><td>
+                            <div class="config-code" id="satelliteXml">Loading...</div>
+                            <div class="copy-hint">💡 全选上方 XML → 复制 → 奥维地图 → 系统 → 导入对象 → 从文本导入</div>
+                        </td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 街道图配置 -->
+            <div class="config-card">
+                <div class="card-header">
+                    <span><span class="icon">🛣️</span> Google 街道图</span>
+                    <span style="font-size: 12px; opacity: 0.9;">lyrs=m</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin: 0 0 10px 0; color: #586069; font-size: 14px;">矢量道路地图，适合导航和路线规划</p>
+                    <table class="config-table">
+                        <tr><th>名称</th><td>谷歌街道</td></tr>
+                        <tr><th>最大缩放</th><td>28</td></tr>
+                        <tr><th>坐标系</th><td>Web Mercator</td></tr>
+                        <tr><th>XML 配置</th><td>
+                            <div class="config-code" id="roadXml">Loading...</div>
+                            <div class="copy-hint">💡 全选上方 XML → 复制 → 奥维地图 → 系统 → 导入对象 → 从文本导入</div>
+                        </td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 混合图配置 -->
+            <div class="config-card">
+                <div class="card-header">
+                    <span><span class="icon">🗺️</span> Google 混合图</span>
+                    <span style="font-size: 12px; opacity: 0.9;">lyrs=y</span>
+                </div>
+                <div class="card-body">
+                    <p style="margin: 0 0 10px 0; color: #586069; font-size: 14px;">卫星图 + 街道标注，兼顾细节与可读性</p>
+                    <table class="config-table">
+                        <tr><th>名称</th><td>谷歌混合</td></tr>
+                        <tr><th>最大缩放</th><td>28</td></tr>
+                        <tr><th>坐标系</th><td>Web Mercator</td></tr>
+                        <tr><th>XML 配置</th><td>
+                            <div class="config-code" id="hybridXml">Loading...</div>
+                            <div class="copy-hint">💡 全选上方 XML → 复制 → 奥维地图 → 系统 → 导入对象 → 从文本导入</div>
+                        </td></tr>
+                    </table>
+                </div>
             </div>
         </div>
-        
-        <!-- 第二步：导入到奥维地图 -->
-        <div class="step">
-            <h3>🚀 第二步：导入到奥维地图</h3>
+
+        <div class="steps">
+            <h3>🚀 三步导入配置</h3>
             <ol>
-                <li>打开奥维地图（电脑端或手机端）</li>
-                <li>点击顶部菜单 <strong>"系统"</strong> → <strong>"导入对象"</strong></li>
-                <li>在弹出的窗口中，选择 <strong>"从文本导入"</strong></li>
-                <li>粘贴刚才复制的完整 XML 配置内容</li>
-                <li>点击 <strong>"确定"</strong> 完成导入</li>
+                <li><strong>选择配置</strong>：根据需求选择卫星图、街道图或混合图的 XML 配置</li>
+                <li><strong>复制配置</strong>：全选对应 XML 代码框中的内容（Ctrl+A），然后复制（Ctrl+C）</li>
+                <li><strong>导入奥维</strong>：
+                    <ul>
+                        <li>打开奥维地图 → <strong>系统</strong> → <strong>导入对象</strong></li>
+                        <li>选择 <strong>"从文本导入"</strong></li>
+                        <li>粘贴刚才复制的 XML 配置</li>
+                        <li>点击 <strong>"确定"</strong>完成导入</li>
+                        <li>在左侧图层列表中找到并启用对应的 Google 图层</li>
+                    </ul>
+                </li>
             </ol>
         </div>
-        
-        <!-- 第三步：启用图层 -->
-        <div class="step">
-            <h3>🌍 第三步：启用 Google 图层</h3>
-            <ol>
-                <li>导入成功后，在左侧图层列表中展开 <strong>"谷歌官方"</strong></li>
-                <li>勾选 <strong>"谷歌卫星"</strong> 启用卫星图</li>
-                <li>地图会自动切换到 Google 卫星底图</li>
-            </ol>
-            <div class="tip">
-                💡 提示：如果加载缓慢，可以右键点击图层 → <strong>"删除"</strong>，然后重新导入配置。
-            </div>
+
+        <div class="tip">
+            <strong>💡 温馨提示：</strong>
+            <ul style="margin: 8px 0 0 20px; padding: 0;">
+                <li>如果地图加载缓慢，可以尝试切换到其他类型的地图</li>
+                <li>Cloudflare Worker 每月免费额度为 10 万次请求，超出后可能限速</li>
+                <li>三个配置可同时导入，根据需要切换使用</li>
+            </ul>
         </div>
-        
+
         <hr>
         
-        <!-- 技术信息表 -->
-        <h3>ℹ️ 技术详情</h3>
-        <table>
-            <tr>
-                <th>服务器地址</th>
-                <td id="serverUrl">-</td>
-            </tr>
-            <tr>
-                <th>URL 模板</th>
-                <td><code>/vt/lyrs=s@699&hl=zh-CN&gl=cn&src=app&x={$x}&y={$y}&z={$z}&s=</code></td>
-            </tr>
-            <tr>
-                <th>支持的 lyrs 参数</th>
-                <td>
-                    • <code>s</code> - 卫星图（默认）<br>
-                    • <code>m</code> - 街道图<br>
-                    • <code>y</code> - 混合图（街道 + 卫星）
-                </td>
-            </tr>
-            <tr>
-                <th>最大缩放级别</th>
-                <td>28</td>
-            </tr>
-            <tr>
-                <th>坐标系</th>
-                <td>Web Mercator (EPSG:3857)</td>
-            </tr>
-            <tr>
-                <th>瓦片尺寸</th>
-                <td>256 × 256 像素</td>
-            </tr>
-        </table>
-        
-        <hr>
-        
-        <!-- 故障排除 -->
-        <h3>❓ 常见问题</h3>
-        
-        <div class="tip">
-            <strong>问题 1:</strong> 导入后显示"No Data"或空白？<br>
-            <strong>解决:</strong> 检查 <code>host</code> 字段是否填写正确（不应包含 https:// 前缀）
-        </div>
-        
-        <div class="tip">
-            <strong>问题 2:</strong> 地图加载很慢或超时？<br>
-            <strong>解决:</strong> Cloudflare Worker 有免费额度限制（10 万请求/月），如超量需更换域名或自建服务
-        </div>
-        
-        <div class="tip">
-            <strong>问题 3:</strong> 如何切换不同类型的地图？<br>
-            <strong>解决:</strong> 修改 XML 中 <code>&lt;url&gt;</code> 里的 <code>lyrs</code> 参数值即可
-        </div>
-        
-        <hr>
-        
-        <div class="success-box">
-            <strong>项目地址:</strong> <a href="https://github.com/miaouai/ov-google-proxy" target="_blank">https://github.com/miaouai/ov-google-proxy</a>
-        </div>
+        <footer>
+            <p>项目地址: <a href="https://github.com/miaouai/ov-google-proxy" target="_blank">github.com/miaouai/ov-google-proxy</a></p>
+            <p>Version v2.0.6 | 自动检测并填充域名，一键复制即用</p>
+        </footer>
     </div>
 
     <script>
-        // ✅ 提取纯主机名（不含协议）
-        const fullUrl = window.location.origin;
-        const urlObj = new URL(fullUrl);
-        const workerHost = urlObj.hostname;
+        // ✅ 核心：自动获取当前 Worker 域名（不含协议）
+        const currentHost = window.location.hostname;
+        const currentUrl = window.location.origin;
         
-        // ✅ 使用已验证成功的 URL 模板
-        const urlTemplate = '/vt/lyrs=s@699&hl=zh-CN&gl=cn&src=app&x={$x}&y={$y}&z={$z}&s=';
+        // 更新页面显示
+        document.getElementById('currentDomain').textContent = `${currentUrl} (${currentHost})`;
         
-        // 完整的 XML 配置
-        const xmlTemplate = `<?xml version="1.0" encoding="UTF-8"?>
+        // URL 模板基础部分
+        const baseTemplate = '/vt/lyrs={LYRS}@699&hl=zh-CN&gl=cn&src=app&x={$x}&y={$y}&z={$z}&s=';
+        
+        // 生成 XML 配置的函数
+        function generateXML(name, lyrs) {
+            return `<?xml version="1.0" encoding="UTF-8"?>
 <customMapSource>
-  <mapID>203</mapID>
-  <name>谷歌卫星</name>
+  <mapID>${lyrs === 's' ? '203' : lyrs === 'm' ? '204' : '205'}</mapID>
+  <name>${name}</name>
   <version>0</version>
   <maxZoom>28</maxZoom>
   <coordType>Mercator</coordType>
@@ -156,16 +176,28 @@
   <tileFormat>JPG</tileFormat>
   <tileSize>256</tileSize>
   <protocol>https</protocol>
-  <host>${workerHost}</host>
+  <host>${currentHost}</host>
   <group>谷歌官方</group>
   <port>443</port>
-  <url>${urlTemplate}</url>
+  <url>${baseTemplate.replace('{LYRS}', lyrs)}</url>
 </customMapSource>`;
+        }
         
-        // 显示配置
-        document.getElementById('xmlConfig').textContent = xmlTemplate;
-        document.getElementById('currentHost').textContent = `https://${workerHost}`;
-        document.getElementById('serverUrl').innerHTML = `<a href="https://${workerHost}" target="_blank">https://${workerHost}</a>`;
+        // 动态生成三种地图的配置
+        const satelliteXml = generateXML('谷歌卫星', 's');
+        const roadXml = generateXML('谷歌街道', 'm');
+        const hybridXml = generateXML('谷歌混合', 'y');
+        
+        // 填充到页面
+        document.getElementById('satelliteXml').textContent = satelliteXml;
+        document.getElementById('roadXml').textContent = roadXml;
+        document.getElementById('hybridXml').textContent = hybridXml;
+        
+        console.log('✅ v2.0.6 配置页面已加载');
+        console.log('当前域名:', currentHost);
+        console.log('卫星图 ID:', satelliteXml.match(/<mapID>(.*?)<\/mapID>/)?.[1]);
+        console.log('街道图 ID:', roadXml.match(/<mapID>(.*?)<\/mapID>/)?.[1]);
+        console.log('混合图 ID:', hybridXml.match(/<mapID>(.*?)<\/mapID>/)?.[1]);
     </script>
 </body>
 </html>
