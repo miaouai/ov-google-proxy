@@ -210,30 +210,20 @@ export default {
     const workerHost = url.origin;
     const pathname = url.pathname;
     
-    console.log(`[v2.0.1] Request: ${request.method} ${pathname}`);
+    console.log(`[v2.0.4] Request: ${request.method} ${pathname}`);
     
     // 🎯 地图瓦片代理 - 核心路由！优先级最高！
-    // 支持以下所有形式：
-    //   /vt?lyrs=m&x=1&y=1&z=1
-    //   /vt/?lyrs=m&x=1&y=1&z=1  
-    //   /maps/vt?lyrs=m&x=1&y=1&z=1
-    //   /mt1/vt?lyrs=m&x=1&y=1&z=1
     if (pathname.startsWith('/vt') || pathname.startsWith('/maps/') || pathname.startsWith('/mt1/')) {
-      console.log(`[v2.0.1] 命中代理路由，转发到 Google`);
+      console.log(`[v2.0.4] 命中代理路由，转发到 Google`);
       return handleProxyRequest(request);
     }
     
-    // 🎯 根路径 - 返回 XML 配置
-    if (pathname === '/' || pathname === '/config') {
-      return handleXMLConfig(request, workerHost);
-    }
-    
-    // 🎯 GUI 页面
-    if (pathname === '/copy' || pathname === '/gui') {
+    // 🎯 根路径 - 直接返回 HTML 配置页面 (v2.0.4 更新)
+    if (pathname === '/' || pathname === '/config' || pathname === '/copy' || pathname === '/gui') {
       return handleCopyConfig(request, workerHost);
     }
     
-    // 🎯 默认返回 GUI 页面
+    // 🎯 默认返回 HTML 配置页面
     return handleCopyConfig(request, workerHost);
   }
 };
